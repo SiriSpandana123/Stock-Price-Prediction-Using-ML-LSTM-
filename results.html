@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Price Prediction Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f0f0; /* Light gray background */
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff; /* White background for container */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+            text-align: center;
+        }
+        .graph-item {
+            margin-bottom: 20px;
+        }
+        h1, h2 {
+            color: #333; /* Dark gray text color */
+        }
+        .metrics-table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        .metrics-table th, .metrics-table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        .metrics-table th {
+            background-color: #f2f2f2; /* Light gray background for header */
+        }
+        .predicted-price {
+            color: #007bff; /* Blue color for predicted price */
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Stock Price Prediction Results</h1>
+        
+        <div class="graph-item">
+            <div id="plot1"></div>
+        </div>
+        
+        <div class="graph-item">
+            <div id="plot2"></div>
+        </div>
+        
+        <div class="graph-item">
+            <div id="plot3"></div>
+        </div>
+        
+        <div class="graph-item">
+            <div id="plot4"></div>
+        </div>
+        
+        <div class="graph-item">
+            <div id="plot5"></div>
+        </div>
+        
+        <div class="graph-item">
+            <div id="plot6"></div>
+        </div>
+
+        <h2>Predicted Stock Price for the Next Day: <span class="predicted-price">{{ next_day_price }}</span></h2>
+         <h1>Performance Metrics-table</h1>
+        <table class="metrics-table">
+            <tr>
+                <th>Metric</th>
+                <th>Training Data</th>
+                <th>Testing Data</th>
+            </tr>
+            <tr>
+                <td>Mean Squared Error (MSE)</td>
+                <td>{{ train_metrics.mse }}</td>
+                <td>{{ test_metrics.mse }}</td>
+            </tr>
+            <tr>
+                <td>Root Mean Squared Error (RMSE)</td>
+                <td>{{ train_metrics.rmse }}</td>
+                <td>{{ test_metrics.rmse }}</td>
+            </tr>
+            <tr>
+                <td>Mean Absolute Error (MAE)</td>
+                <td>{{ train_metrics.mae }}</td>
+                <td>{{ test_metrics.mae }}</td>
+            </tr>
+            <tr>
+                <td>R-squared (R²)</td>
+                <td>{{ train_metrics.r2 }}</td>
+                <td>{{ test_metrics.r2 }}</td>
+            </tr>
+            <tr>
+                <td>Explained Variance Score</td>
+                <td>{{ train_metrics.evs }}</td>
+                <td>{{ test_metrics.evs }}</td>
+            </tr>
+            <tr>
+                <td>Median Absolute Error (MedAE)</td>
+                <td>{{ train_metrics.medae }}</td>
+                <td>{{ test_metrics.medae }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        var graph1 = {{ graphJSON1 | safe }};
+        var graph2 = {{ graphJSON2 | safe }};
+        var graph3 = {{ graphJSON3 | safe }};
+        var graph4 = {{ graphJSON4 | safe }};
+        var graph5 = {{ graphJSON5 | safe }};
+        var graph6 = {{ graphJSON6 | safe }};
+        Plotly.newPlot('plot1', graph1.data, graph1.layout);
+        Plotly.newPlot('plot2', graph2.data, graph2.layout);
+        Plotly.newPlot('plot3', graph3.data, graph3.layout);
+        Plotly.newPlot('plot4', graph4.data, graph4.layout);
+        Plotly.newPlot('plot5', graph5.data, graph5.layout);
+        Plotly.newPlot('plot6', graph6.data, graph6.layout);
+    </script>
+</body>
+</html>
